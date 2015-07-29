@@ -1,0 +1,7 @@
+computeSourcePath=true
+contextsDir=/Users/titengjiang/Documents/developerTool/tomcat/apache-tomcat-7.0.57/conf/Catalina/localhost
+eclipse.preferences.version=1
+projectsInCp=aurora-plugin-weixin;
+tomcatConfigFile=/Users/titengjiang/Documents/developerTool/tomcat/apache-tomcat-7.0.57/conf/server.xml
+tomcatDir=/Users/titengjiang/Documents/developerTool/tomcat/apache-tomcat-7.0.57
+tomcatVersion=tomcatV7
