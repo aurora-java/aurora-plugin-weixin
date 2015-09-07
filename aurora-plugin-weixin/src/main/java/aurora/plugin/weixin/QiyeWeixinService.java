@@ -72,6 +72,7 @@ public class QiyeWeixinService extends WeixinService {
 				.getString("MsgType");
 		String procPath = BASIC_PATH + "qiye/" + mAppName + "/";
 
+		
 		Boolean isSuccess = true;
 
 		if (msgType.equals(TEXT_TYPE)) {

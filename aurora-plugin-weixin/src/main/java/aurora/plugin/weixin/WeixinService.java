@@ -20,6 +20,8 @@ public abstract class WeixinService  extends HttpServiceInstance{
 	
 	public static final String IMG_TYPE = "image";
 	
+	public static final String EVENT_TYPE ="event";
+	
 	public  static final String BASIC_PATH = "modules/weixin/";
 	
 	public static final String TEXT_PROC_NAME = "textEcho.svc";
@@ -28,6 +30,8 @@ public abstract class WeixinService  extends HttpServiceInstance{
 	
 	
 	public static final String OTHER_PROC_NAME = "otherEcho.svc";
+	
+	public static final String EVENT_PROC_NAME = "eventEcho.svc";
 	
 	HashMap<String, WXBizMsgCrypt> mWxBizMap;
 	

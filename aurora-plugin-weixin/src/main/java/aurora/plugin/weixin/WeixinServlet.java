@@ -272,7 +272,7 @@ public class WeixinServlet extends HttpServlet {
 					
 					
 				}
-			}, 3000,1000 * 7000);
+			}, 3000,1000 * 7200);
 
 		}
 
