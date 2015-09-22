@@ -75,6 +75,12 @@ public class QiyeWeixinService extends WeixinService {
 		
 		Boolean isSuccess = true;
 
+		if(msgType == null){
+			
+			throw new RuntimeException("不支持的请求类型");
+
+		}
+		
 		if (msgType.equals(TEXT_TYPE)) {
 
 			isSuccess = invoke(getProc(procPath + TEXT_PROC_NAME,
@@ -94,6 +100,7 @@ public class QiyeWeixinService extends WeixinService {
 		if (isSuccess) {
 			String returnStr = getServiceContext().getParameter().getString("json");
 
+			
 			if (returnStr == null) {
 				
 				return false;

@@ -49,9 +49,6 @@ public class QyWeixinInitSession extends AbstractEntry {
 			throw new RuntimeException("请检查 groupName 是否和配置文件task groupname对应");
 		}
 		
-//		if(session !=null){
-//		 session.invalidate();
-//		}
 		
 		Boolean sessionExist = req.getSession(false) == null?false : true;
 		int retry = 5;

@@ -7,7 +7,7 @@ import aurora.plugin.weixin.QiyeWeixinInstance;
 
 public class QiyeWeixinConfig {
 	
-	HashMap<String,QiyeWeixinInstance> weixinInstanceMap  = null;
+	HashMap<String,QiyeWeixinInstance> weixinInstanceMap ;
 	
 	HashMap<String,QiyeTokenTask> qiyeTokenTaskMap ;
 
@@ -27,6 +27,8 @@ public class QiyeWeixinConfig {
 		mObjectRegistry.registerInstance(QiyeWeixinConfig.class, this);
 	
 	}
+	
+	
 	
 	public void addInstances(QiyeWeixinInstance[] weixinInstances) {
 		
@@ -48,5 +50,18 @@ public class QiyeWeixinConfig {
 		
 		
 	}
+
+	public HashMap<String, QiyeWeixinInstance> getWeixinInstanceMap() {
+		return weixinInstanceMap;
+	}
+
+
+	public HashMap<String, QiyeTokenTask> getQiyeTokenTaskMap() {
+		return qiyeTokenTaskMap;
+	}
+
+
+	
+	
 	
 }

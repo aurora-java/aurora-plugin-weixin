@@ -40,7 +40,7 @@ public class WeixinServiceFactory {
 			
 		}else if(method[0].equals(GZ_WEIXIN)) {
 			
-			return null;
+			throw new ServletException("暂不支持公众微信号");
 
 		}else {
 			 
@@ -52,7 +52,7 @@ public class WeixinServiceFactory {
 	}
 	
 	
-	public QiyeWeixinService createQiyeWeixinService(HttpServletRequest req, HttpServletResponse resp,HashMap<String, WXBizMsgCrypt> wxBizMap,String appName) throws Exception
+	private QiyeWeixinService createQiyeWeixinService(HttpServletRequest req, HttpServletResponse resp,HashMap<String, WXBizMsgCrypt> wxBizMap,String appName) throws Exception
 	{
 		QiyeWeixinService weixinService =   new QiyeWeixinService(req.getRequestURI(),mProcedureManager,wxBizMap);
 		weixinService.setRequest(req);

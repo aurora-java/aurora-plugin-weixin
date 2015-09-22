@@ -1,11 +1,18 @@
 package aurora.plugin.weixin;
 
 import java.io.IOException;
+import java.util.HashMap;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import uncertain.core.UncertainEngine;
+import uncertain.ocm.IObjectRegistry;
+import aurora.plugin.weixin.util.Assert;
+
 public class QiyeWeixinNetworkUtil {
+	
+	public static final String qiyePostMessageUrl = "https://qyapi.weixin.qq.com/cgi-bin/message/send?access_token=";
 
 	static {
 
@@ -27,12 +34,6 @@ public class QiyeWeixinNetworkUtil {
 
 		JSONObject respJson = new JSONObject(respStr);
 
-		if (respJson.has("errcode")) {
-			throw new RuntimeException("出错返回" + respJson.getString("errcode")
-					+ respJson.getString("errmsg"));
-		} else if (!respJson.has("UserId")) {
-			throw new RuntimeException("请求者非企业员工，无法获取user_id");
-		}
 
 		return respJson.getString("UserId");
 
@@ -46,16 +47,7 @@ public class QiyeWeixinNetworkUtil {
 
 
 		JSONObject respJson = new JSONObject(respStr);
-		
-	    String errmsg=	respJson.getString("errmsg");
-	    
-	    //success return 
-	    if(!errmsg.equals("ok")){
-	    	
-	    	throw new RuntimeException("getJsTicket error return" + respJson.toString());
-
-	    	
-	    }
+			    
 	    
 	    return  respJson.getString("ticket");
 		
@@ -66,32 +58,37 @@ public class QiyeWeixinNetworkUtil {
  * @param corpId
  * @param secrect
  * @return
+ * @throws IOException 
+ * @throws JSONException 
  */
 
-	public static String getAccessToken(String corpId, String secrect) {
+	public static String getAccessToken(String corpId, String secrect) throws IOException, JSONException {
 
 
 		String url = "https://qyapi.weixin.qq.com/cgi-bin/gettoken?corpid="
 				+ corpId + "&corpsecret=" + secrect;
 		String accessToken = null;
-		try {
 
 		String respStr	= UrlHelper.doget(url);
 
-			JSONObject respJson = new JSONObject(respStr);
-			accessToken = respJson.getString("access_token");
+		JSONObject respJson = new JSONObject(respStr);
+		accessToken = respJson.getString("access_token");
 			
-			
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
 		return accessToken;
 	}
-
+/**
+ * 
+ * @param menuConfig
+ * @param corpId
+ * @param secrect
+ * @param agentId
+ * @throws IOException
+ * @throws JSONException
+ */
 	
 
-	public static void createMenu(String menuConfig, String corpId,
-			String secrect, String agentId) throws IOException {
+	public static String createMenu(String menuConfig, String corpId,
+			String secrect, String agentId) throws IOException, JSONException {
 
 		String accessToken = getAccessToken(corpId, secrect);
 
@@ -100,22 +97,46 @@ public class QiyeWeixinNetworkUtil {
 
 		String respString = UrlHelper.doPost(action,menuConfig);
 
-		System.out.println("resp is " + respString);
-
+		return respString;
+		
 	}
 
 	public static String deleteMenu(String corpId, String secrect,
-			String agentId) throws IOException {
+			String agentId) throws IOException, JSONException {
 		String accessToken = getAccessToken(corpId, secrect);
 
 		String action = "https://qyapi.weixin.qq.com/cgi-bin/menu/delete?access_token="
 				+ accessToken + "&agentid=" + agentId;
 
 		String respString = UrlHelper.doget(action);
-		System.out.println(" resp is " + respString);
 
 		return respString;
 
 	}
 
+/***
+ * 
+ * @return
+ * @throws IOException 
+ */
+	public static String sendNewsMessage(String taskName,String param,IObjectRegistry objectRegistry) throws RuntimeException, IOException
+	{
+		String respStr= null;
+		
+		Assert.notNull(taskName);
+		Assert.notNull(param);
+
+		UncertainEngine uncertainEngine = (UncertainEngine) objectRegistry.getInstanceOfType(UncertainEngine.class);
+		
+		
+		HashMap<String,QiyeTokenTask> tokenTaskMap  = (HashMap) uncertainEngine.getGlobalContext().get("tokenMap");
+		
+		QiyeTokenTask task  = tokenTaskMap.get(taskName);
+		
+		respStr = UrlHelper.doPost(qiyePostMessageUrl + task.getToken(), param);
+						
+		return respStr;
+	}
+	
+	
 }

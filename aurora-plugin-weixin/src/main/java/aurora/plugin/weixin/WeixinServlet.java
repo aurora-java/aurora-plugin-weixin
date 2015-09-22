@@ -26,6 +26,8 @@ import aurora.service.http.HttpServiceFactory;
 import aurora.service.http.WebContextInit;
 import aurora.transaction.ITransactionService;
 import uncertain.core.UncertainEngine;
+import uncertain.logging.ILogger;
+import uncertain.logging.LoggingContext;
 import uncertain.ocm.IObjectRegistry;
 import uncertain.proc.ProcedureManager;
 import uncertain.proc.Sleep;
@@ -43,11 +45,11 @@ public class WeixinServlet extends HttpServlet {
 
 	protected HashMap<String, WXBizMsgCrypt> wxBizMap;
 
-	protected HashMap<String, QiyeTokenTask> tokenMap;
+	protected HashMap<String, QiyeTokenTask> tokenTaskMap;
 
 	protected QiyeWeixinConfig weixinConfig;
 
-	private static final long serialVersionUID = 1753926278834479860L;
+	private static final long serialVersionUID = 1753926278834479560L;
 
 	protected WeixinService createServiceInstance(HttpServletRequest request,
 			HttpServletResponse response, String method[]) throws Exception {
@@ -73,10 +75,8 @@ public class WeixinServlet extends HttpServlet {
 
 	public String[] populateMethod(String requestUri) throws ServletException {
 
-		int posi = requestUri.indexOf("weixin") + 7;
-		String methodStr = requestUri.substring(posi);
-
-		String method[] = methodStr.split("/");
+		requestUri = requestUri.substring(1);
+		String method[] = requestUri.split("/");
 		if (method.length != 2) {
 
 			throw new ServletException(" error url url后面只能携带两个参数");
@@ -107,7 +107,8 @@ public class WeixinServlet extends HttpServlet {
 
 		try {
 			trans.begin();
-			method = populateMethod(request.getRequestURI());
+
+			method = populateMethod(request.getPathInfo());
 
 			svc = createServiceInstance(request, resp, method);
 			ctx = svc.getServiceContext();
@@ -195,11 +196,11 @@ public class WeixinServlet extends HttpServlet {
 
 		wxBizMap = new HashMap<String, WXBizMsgCrypt>();
 
-		tokenMap = weixinConfig.qiyeTokenTaskMap;
-		mUncertainEngine.getGlobalContext().put("tokenMap", tokenMap);
+		tokenTaskMap = weixinConfig.getQiyeTokenTaskMap();
+		mUncertainEngine.getGlobalContext().put("tokenMap", tokenTaskMap);
 		
 
-		HashMap<String, QiyeWeixinInstance> weixinInstanceMap = weixinConfig.weixinInstanceMap;
+		HashMap<String, QiyeWeixinInstance> weixinInstanceMap = weixinConfig.getWeixinInstanceMap();
 
 		if (weixinInstanceMap == null) {
 
@@ -218,17 +219,15 @@ public class WeixinServlet extends HttpServlet {
 
 			} catch (AesException e) {
 				// TODO Auto-generated catch block
-				e.printStackTrace();
 				throw new ServletException(
 						"初始化微信失败，请检查，配置的token, encodingAESKey,corpId");
 			}
 
 		}
 
-		// ///初始化task,每段时间访问获取token
-		for (String keyString : tokenMap.keySet()) {
+		for (String keyString : tokenTaskMap.keySet()) {
 
-			final QiyeTokenTask task = tokenMap.get(keyString);
+			final QiyeTokenTask task = tokenTaskMap.get(keyString);
 
 			Timer current = new Timer();
 			current.schedule(new TimerTask() {
@@ -237,42 +236,26 @@ public class WeixinServlet extends HttpServlet {
 				@Override
 				public void run() {
 					// TODO Auto-generated method stub
-					String token = QiyeWeixinNetworkUtil.getAccessToken(
-							mTask.getCorpId(), mTask.getSecrect());
+					
+					try{	
+						
+						String token = QiyeWeixinNetworkUtil.getAccessToken(mTask.getCorpId(), mTask.getSecrect());
+						String jsTicket = QiyeWeixinNetworkUtil.getJsTicket(token);
+						
+						task.setToken(token);
+						task.setJsapiTicket(jsTicket);
+					
+						
+					} catch (Exception e) {
+						
+						e.printStackTrace();
+					
+					} 	
 
-					task.setToken(token);
 				}
 			}, 0, 1000 * 7000);
 			
-			current.schedule(new TimerTask() {
-				
-				@Override
-				public void run() {
-					int retry =5;
-					while(retry>0){
-						if(task.getToken() == null){
-							
-								throw new RuntimeException("token 获取失败");
-						}else {
-							String jsapiTicket;
-							try {
-								jsapiTicket = QiyeWeixinNetworkUtil.getJsTicket(task.getToken());
-								task.setJsapiTicket(jsapiTicket);
 
-							} catch (IOException e) {
-									throw new RuntimeException();
-							} catch (JSONException e) {
-									throw new RuntimeException();
-							}
-							
-						}
-						
-						
-					}
-					
-					
-				}
-			}, 3000,1000 * 7200);
 
 		}
 

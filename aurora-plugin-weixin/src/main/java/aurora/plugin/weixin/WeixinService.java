@@ -76,19 +76,7 @@ public abstract class WeixinService  extends HttpServiceInstance{
  * 将解密后的echostr返回给微信服务器	
  */
     public void doEchoStr() {
-		PrintWriter out = null;
-		try {
-			
-			out = getResponse().getWriter();
-			out.println(encodeEchoStr);
-			out.flush();
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			if (out != null) {
-				out.close();
-			}
-		}
+    	doResp(echoStr);
 	}
     public void doResp(String resMsg){
 		PrintWriter out = null;
@@ -106,23 +94,6 @@ public abstract class WeixinService  extends HttpServiceInstance{
 		}
 	}
     
-//    public void doResp(String resMsg) throws IOException {
-//    	
-//    	OutputStream os = null;
-//		try {
-//			
-//			 os  = getResponse().getOutputStream();
-//			
-//			os.write(resMsg.getBytes("UTF-8"));
-//			os.flush();
-//		} catch (Exception e) {
-//			e.printStackTrace();
-//		} finally {
-//			if (os != null) {
-//				os.close();
-//			}
-//		}
-//	}
         
     
 	public void populate() throws Exception
