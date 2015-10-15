@@ -83,7 +83,7 @@ public class QiyeWeixinService extends WeixinService {
 		
 		if (msgType.equals(TEXT_TYPE)) {
 
-			isSuccess = invoke(getProc(procPath + TEXT_PROC_NAME,
+			isSuccess = invoke(getProc(procPath + TEXT_PROC_NAME,	
 					serviceFactory));
 
 		} else if (msgType.equals(IMG_TYPE)) {

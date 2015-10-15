@@ -76,13 +76,16 @@ public abstract class WeixinService  extends HttpServiceInstance{
  * 将解密后的echostr返回给微信服务器	
  */
     public void doEchoStr() {
-    	doResp(echoStr);
+    	doResp(encodeEchoStr);
 	}
     public void doResp(String resMsg){
 		PrintWriter out = null;
 		try {
 			
 			out = getResponse().getWriter();
+			
+			
+			
 			out.println(resMsg);
 			out.flush();
 		} catch (Exception e) {
@@ -102,12 +105,12 @@ public abstract class WeixinService  extends HttpServiceInstance{
 		timestamp = (String) getServiceContext().getParameter().get("timestamp");
 		nonce = (String) getServiceContext().getParameter().get("nonce");
 
-			
 		
 		if(getRequest().getMethod() == "GET" && getServiceContext().getParameter().containsKey("echostr")){
 			
 			isEchoStr = true;
 			echoStr = (String) getServiceContext().getParameter().get("echostr");
+			
 			
 			encodeEchoStr = mWeibizMsgCrypt.VerifyURL(msgSignature, timestamp, nonce, echoStr);
 			

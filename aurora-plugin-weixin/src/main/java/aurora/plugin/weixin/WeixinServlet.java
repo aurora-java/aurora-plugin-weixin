@@ -77,6 +77,7 @@ public class WeixinServlet extends HttpServlet {
 
 		requestUri = requestUri.substring(1);
 		String method[] = requestUri.split("/");
+		
 		if (method.length != 2) {
 
 			throw new ServletException(" error url url后面只能携带两个参数");
@@ -215,6 +216,7 @@ public class WeixinServlet extends HttpServlet {
 			try {
 				WXBizMsgCrypt crpt = new WXBizMsgCrypt(instance.token,
 						instance.encodingAESKey, instance.corpId);
+				System.out.println("token is "+instance.token +instance.encodingAESKey+instance.corpId  );
 				wxBizMap.put(key, crpt);
 
 			} catch (AesException e) {
