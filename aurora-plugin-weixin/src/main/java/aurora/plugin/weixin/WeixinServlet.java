@@ -36,11 +36,11 @@ public class WeixinServlet extends HttpServlet {
 
 	protected UncertainEngine mUncertainEngine;
 	protected ProcedureManager mProcManager;
-	protected ServletConfig mConfig;
+	protected ServletConfig mConfig; 
 	protected ServletContext mContext;
 	private IObjectRegistry mRegistry;
 	HttpServiceFactory mServiceFactory;
-
+  
 	protected WeixinServiceFactory mWeixinServiceFactory;
 
 	protected HashMap<String, WXBizMsgCrypt> wxBizMap;

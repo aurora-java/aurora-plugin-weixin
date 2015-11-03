@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="aurora-plugin-weixin/src/main/java"/>
+	<classpathentry kind="src" path="aurora-plugin-weixin/src/test/java"/>
+	<classpathentry kind="lib" path="aurora-plugin-weixin/lib/aurora-js.jar"/>
+	<classpathentry kind="lib" path="aurora-plugin-weixin/lib/aurora-plugin.jar"/>
+	<classpathentry kind="lib" path="aurora-plugin-weixin/lib/aurora.jar"/>
+	<classpathentry kind="lib" path="aurora-plugin-weixin/lib/commons-codec-1.9.jar"/>
+	<classpathentry kind="lib" path="aurora-plugin-weixin/lib/ojdbc14.jar"/>
+	<classpathentry kind="lib" path="aurora-plugin-weixin/lib/weixin.jar"/>
+	<classpathentry kind="lib" path="aurora-weixin-plugin.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="target/test-classes"/>
+</classpath>

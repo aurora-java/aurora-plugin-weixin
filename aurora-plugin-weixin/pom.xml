@@ -6,8 +6,8 @@
   <artifactId>aurora-plugin-weixin</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <packaging>jar</packaging>
-
-  <name>aurora-plugin-weixin</name>
+  
+  <name>aurora-plugin-weixin</name> 
   <url>http://maven.apache.org</url>
 
   <properties>
@@ -16,8 +16,8 @@
     
   </properties>
 
-  <dependencies>
-		
+  <dependencies> 
+		  
     <dependency>
       <groupId>org.apache.geronimo.specs</groupId>
       <artifactId>geronimo-jms_1.1_spec</artifactId>

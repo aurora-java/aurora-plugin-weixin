@@ -8,7 +8,7 @@ public class QiyeWeixinInitJsTicket extends AbstractEntry{
 	
 		
 	
-	
+	 
 	@Override
 	public void run(ProcedureRunner runner) throws Exception {
 
