@@ -216,7 +216,7 @@ public class WeixinServlet extends HttpServlet {
 			try {
 				WXBizMsgCrypt crpt = new WXBizMsgCrypt(instance.token,
 						instance.encodingAESKey, instance.corpId);
-				System.out.println("token is "+instance.token +instance.encodingAESKey+instance.corpId  );
+//				System.out.println("token is "+instance.token +instance.encodingAESKey+instance.corpId  );
 				wxBizMap.put(key, crpt);
 
 			} catch (AesException e) {

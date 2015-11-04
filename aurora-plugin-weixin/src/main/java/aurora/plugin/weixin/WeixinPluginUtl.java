@@ -157,10 +157,10 @@ public class WeixinPluginUtl {
  * @param jsTicket
  * @return
  */
-	public CompositeMap  getSignature(String jsTicket,String url){
+	public static CompositeMap  getSignature(String jsTicket,String url){
 		
 		CompositeMap ticketEncryptMap = new CompositeMap();
-		String currentTimeStamp = String.format("%l", System.currentTimeMillis());
+		String currentTimeStamp = String.format("%d", System.currentTimeMillis()/1000);
 		String noncestr = getRandomString(16);//随机字符串
 		
 		StringBuffer dataBuffer = new StringBuffer();
@@ -179,6 +179,10 @@ public class WeixinPluginUtl {
 		ticketEncryptMap.putString("timestamp", currentTimeStamp);
 		ticketEncryptMap.putString("noncestr", noncestr);
 		ticketEncryptMap.putString("signature", signature);
+		ticketEncryptMap.putString("url", url);
+		ticketEncryptMap.putString("jsapi_ticket", jsTicket);
+
+
 		
 		return ticketEncryptMap;
 		
