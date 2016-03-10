@@ -173,7 +173,7 @@ public class WeixinPluginUtl {
 		dataBuffer.append(currentTimeStamp);
 		dataBuffer.append("&url=");
 		dataBuffer.append(url);
-		
+		 
 		String signature	= encryptSHA1(dataBuffer.toString());
 		
 		ticketEncryptMap.putString("timestamp", currentTimeStamp);

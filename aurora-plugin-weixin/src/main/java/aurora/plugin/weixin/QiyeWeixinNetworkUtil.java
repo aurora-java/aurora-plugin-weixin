@@ -252,7 +252,7 @@ public class QiyeWeixinNetworkUtil {
 		Assert.notNull(param);
 		Assert.notNull(objectRegistry);
 		
-		respStr = UrlHelper.doPost(qiyeInviteUserUrl, getTokenByTaskName(taskName, objectRegistry));
+		respStr = UrlHelper.doPost(qiyeInviteUserUrl+ getTokenByTaskName(taskName, objectRegistry), param);
 
 		
 		return respStr;

@@ -231,7 +231,7 @@ public class WeixinServlet extends HttpServlet {
 
 			final QiyeTokenTask task = tokenTaskMap.get(keyString);
 
-			Timer current = new Timer();
+			final Timer current = new Timer();
 			current.schedule(new TimerTask() {
 				QiyeTokenTask mTask = task;
 
@@ -241,21 +241,24 @@ public class WeixinServlet extends HttpServlet {
 					
 					try{	
 						
-						String token = QiyeWeixinNetworkUtil.getAccessToken(mTask.getCorpId(), mTask.getSecrect());
+						String token = QiyeWeixinNetworkUtil.getAccessToken(mTask.getCorpId(), mTask.getSecrect());	
 						String jsTicket = QiyeWeixinNetworkUtil.getJsTicket(token);
-						
+						if(token == null || token.equals("") || jsTicket == null || jsTicket.equals("")){
+							System.out.println("刷新 token 失败，正在尝试重新获取");
+							this.run();
+						}
 						task.setToken(token);
 						task.setJsapiTicket(jsTicket);
-					
-						
 					} catch (Exception e) {
 						
 						e.printStackTrace();
-					
+						System.out.println("刷新 token 失败，正在尝试重新获取");
+						this.run();
+
 					} 	
 
 				}
-			}, 0, 1000 * 7000);
+			}, 0, 1000 * 7200);
 			
 
 

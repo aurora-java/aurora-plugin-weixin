@@ -73,14 +73,14 @@ public class QyWeixinInitSession extends AbstractEntry {
 
 					try {
 						userId = QiyeWeixinNetworkUtil.getUserId(task.token, code);
-
+						System.out.println("get userid is " + userId);
 						// 请求成功返回
 						break;
 
 					} catch (Exception e) {
 						retry--;
 
-						if (retry > 0) {
+						if (retry == 0) {
 							throw e;
 
 						} else {
@@ -104,6 +104,14 @@ public class QyWeixinInitSession extends AbstractEntry {
 				throw new Exception("没有session请登陆");
 			}
 
+		}else {
+			
+			
+			System.out.println(" session exist, session userid is + "+session.getAttribute("user_id"));
+			System.out.println(" session exist, session userid is + "+session.getAttribute("role_id"));
+			System.out.println(" session exist, session userid is + "+session.getAttribute("lang"));
+
+			
 		}
 
 
