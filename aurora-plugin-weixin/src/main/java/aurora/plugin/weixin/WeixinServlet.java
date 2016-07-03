@@ -13,8 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.transaction.UserTransaction;
 
-import org.json.JSONException;
-
 import com.qq.weixin.mp.aes.AesException;
 import com.qq.weixin.mp.aes.WXBizMsgCrypt;
 
@@ -26,11 +24,8 @@ import aurora.service.http.HttpServiceFactory;
 import aurora.service.http.WebContextInit;
 import aurora.transaction.ITransactionService;
 import uncertain.core.UncertainEngine;
-import uncertain.logging.ILogger;
-import uncertain.logging.LoggingContext;
 import uncertain.ocm.IObjectRegistry;
 import uncertain.proc.ProcedureManager;
-import uncertain.proc.Sleep;
 
 public class WeixinServlet extends HttpServlet {
 

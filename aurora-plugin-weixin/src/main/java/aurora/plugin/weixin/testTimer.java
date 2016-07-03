@@ -3,8 +3,6 @@ package aurora.plugin.weixin;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.sun.tools.internal.ws.wsdl.document.jaxws.Exception;
-
 
 
 public class testTimer {
