@@ -87,7 +87,13 @@ public class TempMaterialService {
 
 		
 		//2.调用接口，发送请求，获取临时素材
-		File file=UrlHelper.getFile(getTempMaterial_url,savePath);
+		File file = null;
+		try {
+			file = UrlHelper.getFile(getTempMaterial_url,savePath);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		System.out.println("file:"+file.getName());
 

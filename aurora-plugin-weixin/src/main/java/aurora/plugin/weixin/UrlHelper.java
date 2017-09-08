@@ -76,11 +76,13 @@ public class UrlHelper {
 	 * @param requestMethod 请求方式（GET、POST） 
 	 * @param outputStr 提交的数据 
 	 * @return JSONObject(通过JSONObject.get(key)的方式获取json对象的属性值) 
+	 * @throws NoSuchProviderException 
+	 * @throws Exception 
 	 */  
-	public static File getFile(String requestUrl,String savePath) {  
+	public static File getFile(String requestUrl,String savePath) throws Exception {  
         //String path=System.getProperty("user.dir")+"/img//1.png";
-		File f = new File(savePath);
-		try {  
+	
+		
 			// 创建SSLContext对象，并使用我们指定的信任管理器初始化  
 			TrustManager[] tm = { new MyX509TrustManager() };  
 			SSLContext sslContext = SSLContext.getInstance("SSL", "SunJSSE");  
@@ -100,12 +102,15 @@ public class UrlHelper {
 
 			httpUrlConn.connect();  
 
+			//获取文件扩展名
+			String ext=getExt(httpUrlConn.getContentType());
+			savePath=savePath+ext;
+			//下载文件到f文件
+			File f = new File(savePath);
 
+			
 			// 获取微信返回的输入流
 			InputStream in = httpUrlConn.getInputStream(); 
-			
-			
-			
 			
 			//输出流，将微信返回的输入流内容写到文件中
 			FileOutputStream out = new FileOutputStream(f);
@@ -131,12 +136,10 @@ public class UrlHelper {
 			
 			httpUrlConn.disconnect();  
 
-		}catch (Exception e) {  
-			System.out.println("发送https请求出现异常！" + e);
-			e.printStackTrace();
-		}  
-		return f;  
+			
+			return f;
 	}  
+
 
 	/**
 	 * @desc ：3.微信上传临时素材的请求方法
@@ -219,6 +222,18 @@ public class UrlHelper {
 			e.printStackTrace();
 		} 
 		return buffer.toString();
+	}
+	
+	private static String getExt(String contentType){
+		if("image/jpeg".equals(contentType)){
+			return ".jpg";
+		}else if("image/png".equals(contentType)){
+			return ".png";
+		}else if("image/gif".equals(contentType)){
+			return ".gif";
+		}
+		
+		return null;
 	}
 
 
