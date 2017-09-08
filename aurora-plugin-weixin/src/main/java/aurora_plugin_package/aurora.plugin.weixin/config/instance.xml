@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <u:instance-config xmlns:u="uncertain.pkg">
 	<u:instances>
-		<u:configurable-instance configFile="qiyewexin.config">
+		<u:configurable-instance configFile="qiyeweixin.config">
 			<u:description>微信企业号的配置信息</u:description>
 		</u:configurable-instance>
 	</u:instances>
