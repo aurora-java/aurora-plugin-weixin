@@ -67,12 +67,14 @@ public class TempMaterialService {
 		return null;
 	}
 
-	/** 2.获取临时素材
-	 * 
-	 * @param accessToken
+	/**
+	 * 2.获取临时素材
+	 * @param taskName
+	 * @param savePath
+	 * @param objectRegistry
 	 * @param mediaId
 	 * @return
-	 * @throws UnsupportedEncodingException 
+	 * @throws UnsupportedEncodingException
 	 */
 	public static String getTempMaterial(String taskName,String savePath,IObjectRegistry objectRegistry,String mediaId) throws UnsupportedEncodingException{
 
